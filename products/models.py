@@ -3,14 +3,16 @@ from django.db import models
 # Create your models here.
 class Category(models.Model):
     name=models.CharField(max_length=255)
-    slug=models.CharField(max_length=255)
-    description=models.CharField(max_length=255)
+    slug=models.CharField(max_length=255, unique=True)
+    description=models.TextField(max_length=255)
     image=models.ImageField(upload_to='categories/', blank=True, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
-    def__str__(self):
+    def __str__(self):
         return self.name
+
+ 
 
 class Product(models.Model):
     SIZE_CHOICES=(
@@ -18,7 +20,21 @@ class Product(models.Model):
     )
     name=models.CharField(max_length=255)
     description=models.CharField(max_length=255)
-    category=models.ForeignKey(category, on_delete=models.CASCADE, related_name='products')
+    category=models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     price=models.DecimalField(max_digits=10, decimal_places=2)
-    size=models.CharField(max_length=10, choices=SIZE_CHOICES))
-    scent=
+    size=models.CharField(max_length=10, choices=SIZE_CHOICES)
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    stock_quantity = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['category']),
+        ]
+
+    def __str__(self):
+        return self.name
+
+    
