@@ -1,19 +1,3 @@
-"""
-URL configuration for scentflair project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
@@ -21,30 +5,38 @@ from products.views import ProductViewSet, CategoryViewSet
 from orders.views import OrderViewSet
 from accounts.views import RegisterView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from . import views
+from django.http import JsonResponse
 
+# Home view
+def home(request):
+    return JsonResponse({
+        "message": "Welcome to the ScentFlair API!",
+        "available_endpoints": [
+            "/api/auth/register/",
+            "/api/auth/login/",
+            "/api/auth/token/refresh/",
+            "/api/products/",
+            "/api/orders/",
+            "/api/categories/"
+        ]
+    })
+
+# Routers for API endpoints
 router = DefaultRouter()
 router.register(r'products', ProductViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register(r'orders', OrderViewSet)
 
+# URL patterns
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
-    path('api/payments/', include('payments.urls')),
-    path('', include('products.urls')),
-    path('', include('orders.urls')),
-    path('', include('accounts.urls')),
-    path('', include('payments.urls')),
-
-]
-urlpatterns = [
     path('api/', include(router.urls)),
     path('api/auth/register/', RegisterView.as_view(), name='register'),
     path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/payments/', include('payments.urls')),
+    path('api/accounts/', include('accounts.urls')),
+    path('api/orders/', include('orders.urls')),
+    path('api/products/', include('products.urls')),
 ]
-
-
-
-    
