@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - ScentFlair Luxe</title>
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Checkout</h1>
+</header>
+
+<main class="checkout">
+    <h2>{{ product.name }}</h2>
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:200px;border-radius:10px;">
+    <p><strong>Price:</strong> Ksh {{ product.price }}</p>
+
+    <p>Please make a payment to our official M-Pesa number:</p>
+    <p><strong>Pay to: 07XXXXXXXX (ScentFlair Luxe)</strong></p>
+
+    <form id="payment-form">
+        <label>Your M-Pesa Number:</label><br>
+        <input type="text" id="mpesa_number" placeholder="07XXXXXXXX" required><br><br>
+
+        <label>Transaction Code (from M-Pesa SMS):</label><br>
+        <input type="text" id="transaction_code" placeholder="e.g., QDF23H67" required><br><br>
+
+        <button type="submit">Confirm Payment</button>
+    </form>
+
+    <div id="status" style="margin-top:20px;font-weight:bold;"></div>
+</main>
+
+<script>
+document.getElementById("payment-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const mpesa_number = document.getElementById("mpesa_number").value;
+    const transaction_code = document.getElementById("transaction_code").value;
+
+    const response = await fetch("/api/payments/pay/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            // Optional: Include JWT token if authentication is required
+        },
+        body: JSON.stringify({
+            order: 1,  // Replace with actual order ID once integrated with your order system
+            mpesa_number: mpesa_number,
+            transaction_code: transaction_code,
+            amount: {{ product.price }}
+        })
+    });
+
+    const data = await response.json();
+    document.getElementById("status").innerText = data.error ? data.error : "Payment recorded successfully. We’ll confirm soon!";
+});
+</script>
+
+</body>
+</html>

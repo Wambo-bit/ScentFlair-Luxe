@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScentFlair Luxe | Shop</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h1>🌸 ScentFlair Luxe</h1>
+    <nav>
+        <a href="/shop/">All</a>
+        {% for category in categories %}
+        <a href="?category={{ category.slug }}">{{ category.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+
+<main class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="{% static 'images/no-image.png' %}" alt="No image available">
+        {% endif %}
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.scent_notes|truncatechars:60 }}</p>
+        <p><strong>Ksh {{ product.price }}</strong></p>
+        <button onclick="window.location.href='/orders/new?product={{ product.id }}'">Add to Cart</button>
+    </div>
+    {% empty %}
+    <p>No products available at the moment.</p>
+    {% endfor %}
+</main>
+
+<footer>
+    <p>© 2025 ScentFlair Luxe</p>
+</footer>
+
+</body>
+</html>

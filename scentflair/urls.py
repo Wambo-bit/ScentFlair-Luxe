@@ -6,6 +6,11 @@ from orders.views import OrderViewSet
 from accounts.views import RegisterView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http import JsonResponse
+from products.views import shop_view, product_detail
+from orders.views import checkout_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 # Home view
 def home(request):
@@ -39,4 +44,12 @@ urlpatterns = [
     path('api/accounts/', include('accounts.urls')),
     path('api/orders/', include('orders.urls')),
     path('api/products/', include('products.urls')),
+    path('shop/', shop_view, name='shop'),
+    path('shop/', shop_view, name='shop'),
+    path('product/<int:pk>/', product_detail, name='product-detail'),
+    path('checkout/', checkout_view, name='checkout'),
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
