@@ -1,16 +1,25 @@
 {% load static %}
+{% load tz %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScentFlair Luxe | Shop</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}?v={{ now|date:'U' }}">
+    <script src="http://localhost:8000/__reload__/reload.js"></script>
+
+
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}"> -->
 </head>
 
 <body>
 
 <header>
+     <!-- Logo -->
+     <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="ScentFlair Luxe Logo">
+    </div>
     <h1>🌸 ScentFlair Luxe</h1>
     <nav>
         <a href="/shop/">All</a>
@@ -31,7 +40,10 @@
         <h3>{{ product.name }}</h3>
         <p>{{ product.scent_notes|truncatechars:60 }}</p>
         <p><strong>Ksh {{ product.price }}</strong></p>
-        <button onclick="window.location.href='/orders/new?product={{ product.id }}'">Add to Cart</button>
+        <button onclick="window.location.href='{% url 'add_to_cart' product.id %}'">Add to Cart</button>
+   
+       
+        <!-- <button onclick="window.location.href='/orders/new?product={{ product.id }}'">Add to Cart</button> -->
     </div>
     {% empty %}
     <p>No products available at the moment.</p>

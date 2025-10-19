@@ -1,13 +1,21 @@
-from django.shortcuts import render
-from rest_framework import generics, permissions
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import CustomUserCreationForm
+from rest_framework import generics
+from .models import User
 from .serializers import RegisterSerializer
-from django.http import HttpResponse
 
-# Create your views here.
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()  
+            messages.success(request, "Account created successfully! You can now log in.")
+            return redirect('login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
 class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
-
-#To test the order list page
-def order_list(request):
-    return HttpResponse("Orders page is working fine!")

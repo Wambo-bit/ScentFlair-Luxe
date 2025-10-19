@@ -1,0 +1,91 @@
+/*REGISTER PAGE*/
+/* General body style */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f5f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for login/register forms */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Headings */
+.login-container h1 {
+    color: #ff69b4; /* ScentFlair Luxe pink */
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+.login-container h2 {
+    color: #ff69b4; /* ScentFlair Luxe pink */
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+/* Form fields */
+.login-container input[type="text"],
+.login-container input[type="password"],
+.login-container input[type="email"],
+.login-container input[type="number"],
+.login-container select {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+.login-container button {
+    background-color: #ff69b4;
+    color: #fff;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px;
+    transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #e65aa3;
+}
+
+/* Links */
+.login-container .links {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-container .links a {
+    color: #ff69b4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.login-container .links a:hover {
+    color: #e65aa3;
+}
+
+/* Error message */
+.error-message {
+    color: #d9534f;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}

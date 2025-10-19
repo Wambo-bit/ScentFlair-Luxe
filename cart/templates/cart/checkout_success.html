@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Successful</title>
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Order Successful 🎉</h1>
+</header>
+
+<main>
+    <p>Thank you for your purchase!</p>
+    <p>Your order ID is <strong>#{{ order.id }}</strong>.</p>
+    <p>We’ll confirm your payment and contact you at <strong>{{ order.phone_number }}</strong>.</p>
+
+    <button onclick="window.location.href='/shop/'">Continue Shopping</button>
+</main>
+
+</body>
+</html>

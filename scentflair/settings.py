@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
+    'django_browser_reload',
 
     # Local apps
     'accounts',
     'products',
     'orders',
     'payments',
+    'cart',
 ]
 
 # -----------------------------------------------------
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 # -----------------------------------------------------
@@ -105,7 +108,8 @@ DATABASES = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  #To store project-level templates
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        #'DIRS': [BASE_DIR / "templates"],  #To store project-level templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,6 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
